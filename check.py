@@ -34,7 +34,7 @@ def fetch() -> list[BIOSRelease]:
     result = []
     for bios_file in obj['Files']:
         description = bios_file['Description'].strip('"').replace('<br/>', '\n')
-        description = re.sub(r'\n*Before running the USB BIOS Flashback tool, please rename the BIOS file ?\(PX670ERW\.CAP\) using BIOSRenamer\.\n*', '', description)
+        description = re.sub(r'\n*Before running the USB BIOS Flashback tool, please rename the BIOS file ?\(A5569\.CAP\) using BIOSRenamer\.\n*', '', description)
         result.append(BIOSRelease(
             date=datetime.date.fromisoformat(bios_file['ReleaseDate'].replace('/', '-')),
             version=bios_file['Version'],
@@ -81,7 +81,7 @@ def main() -> None:
     state = load_state()
     for bios in fetch():
         if re.fullmatch(r'\d+', bios.version) and bios.title == '':
-            bios.title = f'PRIME X670E-PRO WIFI BIOS {bios.version}'
+            bios.title = f'TUF GAMING X870-PLUS WIFI BIOS {bios.version}'
         assert bios.title.strip(), bios
         if bios.title in state:
             continue
