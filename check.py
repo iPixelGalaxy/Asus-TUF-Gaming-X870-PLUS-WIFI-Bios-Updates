@@ -24,7 +24,7 @@ class BIOSRelease:
 
 
 def fetch() -> list[BIOSRelease]:
-    url = 'https://www.asus.com/support/api/product.asmx/GetPDBIOS?website=global&pdid=21002'
+    url = 'https://www.asus.com/support/api/product.asmx/GetPDBIOS?website=global&pdid=29156'
     rsp = requests.get(url, headers={'User-Agent': 'Mozilla'})
     assert rsp.status_code == 200, f'HTTP {rsp.status_code} {rsp.reason}\n{rsp.text}'
     body = rsp.json()
@@ -49,7 +49,7 @@ def process(bios: BIOSRelease) -> None:
     release = github.github_release_ensure(
         tag_name=bios.title.replace(' ', '_'),
         name=bios.title,
-        timestamp=datetime.datetime.combine(bios.date, datetime.time(), tzinfo=zoneinfo.ZoneInfo('Asia/Shanghai')),
+        timestamp=datetime.datetime.combine(bios.date, datetime.time(), tzinfo=zoneinfo.ZoneInfo('America/Vancouver')),
     )
     github.github_release_patch(release, body=bios.description)
     with tempfile.TemporaryFile() as f:
